@@ -1,0 +1,12 @@
+[
+    {
+      "id": 1,
+      "hash": "8da193366e1554c08b2870c50f737b9587c3372b656151c4a96028af26f51334",
+      "name": "Administrator"
+    },
+    {
+      "id": 2,
+      "hash": "efe01c36d81062079d3a94c20fcd9ec006e2627f6047731c03010ecb1047c655",
+      "name": "Regular User"
+    }
+  ]

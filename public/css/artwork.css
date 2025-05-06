@@ -1,0 +1,194 @@
+/* Artwork Detail Page Styles */
+.artwork-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.artwork-detail {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.loading {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.artwork-header {
+    padding: 2rem;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.artwork-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.artwork-date {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.artwork-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.artwork-image-container {
+    text-align: center;
+}
+
+.artwork-image {
+    max-width: 100%;
+    max-height: 600px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.artwork-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.artwork-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.artwork-metadata {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.metadata-item {
+    margin-bottom: 1rem;
+}
+
+.metadata-item:last-child {
+    margin-bottom: 0;
+}
+
+.metadata-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #555;
+}
+
+.metadata-value {
+    color: #333;
+}
+
+.back-to-gallery {
+    display: inline-block;
+    margin-top: 2rem;
+    font-weight: 600;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Error message styling */
+.error-message {
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.error-message a {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .artwork-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .artwork-image-container {
+        flex: 1;
+    }
+    
+    .artwork-info {
+        flex: 1;
+    }
+}
+
+@media (max-width: 767px) {
+    .artwork-header h1 {
+        font-size: 2rem;
+    }
+    
+    .artwork-container {
+        padding: 2rem 1rem;
+    }
+}
+
+/* Additional details section */
+.additional-details {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.additional-details h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+/* Social sharing */
+.social-share {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    color: #555;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.share-button:hover {
+    background-color: #e5e5e5;
+    color: #333;
+}
