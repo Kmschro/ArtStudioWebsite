@@ -31,28 +31,15 @@
                 <p>Manage your artwork portfolio</p>
             </div>
 
-            <!-- Login Form (shown when not logged in) -->
-            <div id="login-section" class="admin-card">
-                <h2>Login</h2>
-                <div id="login-alert" class="alert alert-danger" style="display: none;"></div>
-                <form id="login-form" class="login-form">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn">Login</button>
-                </form>
-            </div>
-
-            <!-- Admin Dashboard (shown when logged in) -->
-            <div id="dashboard-section" style="display: none;">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section">
                 <!-- User Info -->
                 <div class="admin-card">
-                    <div id="user-info"></div>
+                    <div id="user-info">
+                        <div class="user-greeting">Hello, Administrator</div>
+                        <p>This is a static demo of the admin panel for GitHub Pages.</p>
+                        <p>Note: Since GitHub Pages only hosts static content, form submissions and dynamic content won't actually work.</p>
+                    </div>
                 </div>
                 
                 <!-- Upload Form -->
@@ -106,8 +93,7 @@
                         <button id="refresh-btn" class="btn">Refresh</button>
                     </div>
                     <div id="artworks-list" class="artwork-list">
-                        <!-- Artwork items will be dynamically added here -->
-                        <div class="loading">Loading your artworks...</div>
+                        <!-- Static artwork display for GitHub Pages -->
                     </div>
                 </div>
             </div>
@@ -128,6 +114,7 @@
         </div>
     </footer>
 
-    <script src="./js/admin.js"></script>
+    <script src="./js/static-data.js"></script>
+    <script src="./js/static-admin.js"></script>
 </body>
 </html>

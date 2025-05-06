@@ -1,51 +1,48 @@
 // DOM Elements
 const artworkDetail = document.getElementById('artwork-detail');
 
-// API endpoint - Make sure this points to your Express server
-const API_URL = 'http://localhost:3000/api/artworks';
-
 // Get artwork ID from URL query parameter
 function getArtworkId() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('id');
 }
 
-// Fetch artwork by ID
-async function fetchArtworkById(id) {
-    try {
-        console.log('Fetching artwork with ID:', id);
-        const response = await fetch(`${API_URL}/${id}`);
-        
-        if (!response.ok) {
-            console.error('Response not OK:', response.status, response.statusText);
-            throw new Error('Failed to fetch artwork');
-        }
-        
-        const data = await response.json();
-        console.log('API response:', data);
-        
-        if (data.success && data.artwork) {
-            return data.artwork;
-        } else {
-            console.error('Invalid response format or artwork not found', data);
-            throw new Error('Invalid response format or artwork not found');
-        }
-    } catch (error) {
-        console.error('Error fetching artwork:', error);
-        return null;
-    }
-}
-
-// Format date
+// Format date for display
 function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString(undefined, options);
 }
 
+// Get artwork by ID from static data
+function getArtworkById(id) {
+    // First try to get from localStorage (if coming from home page)
+    const storedArtwork = localStorage.getItem('selectedArtwork');
+    if (storedArtwork) {
+        const artwork = JSON.parse(storedArtwork);
+        if (artwork.id.toString() === id.toString()) {
+            return artwork;
+        }
+    }
+    
+    // Otherwise, find in static data
+    return ARTWORKS.find(artwork => artwork.id.toString() === id.toString());
+}
+
 // Display artwork details
 function displayArtworkDetails(artwork) {
     console.log('Displaying artwork details:', artwork);
+    
+    // Fix image path for GitHub Pages
+    let imageUrl = artwork.imageUrl;
+    
+    // If we're running on GitHub Pages, make sure the image paths are correct
+    if (window.location.hostname.endsWith('github.io')) {
+        // Convert relative paths to GitHub Pages format
+        imageUrl = imageUrl.startsWith('/') ? 
+            `${window.location.pathname}${imageUrl.substring(1)}` : 
+            imageUrl;
+    }
     
     // Create artwork detail HTML
     const html = `
@@ -55,7 +52,7 @@ function displayArtworkDetails(artwork) {
         </div>
         <div class="artwork-content">
             <div class="artwork-image-container">
-                <img src="${artwork.imageUrl}" alt="${artwork.title}" class="artwork-image">
+                <img src="${imageUrl}" alt="${artwork.title}" class="artwork-image" onerror="this.src='https://via.placeholder.com/800x600?text=Artwork+Image'">
             </div>
             <div class="artwork-info">
                 <div class="artwork-description">
@@ -119,7 +116,7 @@ function shareOnSocialMedia(platform) {
             break;
         case 'pinterest':
             const imageUrl = document.querySelector('.artwork-image').src;
-            shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(window.location.origin + imageUrl)}&description=${encodeURIComponent(title)}`;
+            shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(title)}`;
             break;
     }
     
@@ -147,7 +144,7 @@ function displayError(message) {
 }
 
 // Initialize the page
-async function init() {
+function init() {
     const artworkId = getArtworkId();
     
     if (!artworkId) {
@@ -155,8 +152,8 @@ async function init() {
         return;
     }
     
-    console.log('Starting initialization with ID:', artworkId);
-    const artwork = await fetchArtworkById(artworkId);
+    console.log('Looking for artwork with ID:', artworkId);
+    const artwork = getArtworkById(artworkId);
     
     if (artwork) {
         displayArtworkDetails(artwork);

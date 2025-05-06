@@ -24,7 +24,7 @@
             <div class="nav-actions">
                 <a href="admin.html" id="admin-link" class="admin-link" style="display: none;">Admin</a>
                 <button id="logout-btn" class="btn logout-btn" style="display: none;">Logout</button>
-                <a href="admin.html" id="login-link" class="login-btn">Login</a>
+                <a href="login.html" id="login-link" class="login-btn">Login</a>
             </div>
         </nav>
     </header>
@@ -66,11 +66,8 @@
         </div>
     </footer>
 
-    <script src="./js/artwork.js"></script>
-    <script src="./js/auth.js"></script>
-    <script>
-        // Debug info to help troubleshoot
-        console.log('Artwork ID from URL:', new URLSearchParams(window.location.search).get('id'));
-    </script>
+    <script src="./js/static-data.js"></script>
+    <script src="./js/static-artwork.js"></script>
+    <script src="./js/static-auth.js"></script>
 </body>
 </html>
