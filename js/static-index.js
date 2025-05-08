@@ -10,11 +10,11 @@ function createArtworkCard(artwork) {
     card.className = 'artwork-card';
     card.dataset.id = artwork.id;
     
-    // Fix image path for GitHub Pages
+    // Use the image URL directly - it can be a path or a data URL
     let imageUrl = artwork.imageUrl;
     
-    // If we're running on GitHub Pages, make sure the image paths are correct
-    if (window.location.hostname.endsWith('github.io')) {
+    // Only fix path if it's a relative path, not a data URL
+    if (!imageUrl.startsWith('data:') && window.location.hostname.endsWith('github.io')) {
         // Convert relative paths to GitHub Pages format
         imageUrl = imageUrl.startsWith('/') ? 
             `${window.location.pathname}${imageUrl.substring(1)}` : 
@@ -100,21 +100,24 @@ function updateAuthUI() {
     }
 }
 
-// Display artworks from static data
+// Display artworks from static data plus localStorage
 function displayArtworks() {
+    // Get all artworks (including user-added ones)
+    const allArtworks = getAllArtworks();
+    
     // Clear container
     artworkContainer.innerHTML = '';
     
     // Display error message if no artworks found
-    if (!ARTWORKS || ARTWORKS.length === 0) {
+    if (!allArtworks || allArtworks.length === 0) {
         artworkContainer.innerHTML = '<div class="no-artworks">No artworks found</div>';
         return;
     }
     
-    console.log('Displaying', ARTWORKS.length, 'artworks');
+    console.log('Displaying', allArtworks.length, 'artworks');
     
     // Create and append artwork cards
-    ARTWORKS.forEach(artwork => {
+    allArtworks.forEach(artwork => {
         const card = createArtworkCard(artwork);
         artworkContainer.appendChild(card);
     });
@@ -122,7 +125,7 @@ function displayArtworks() {
 
 // Initialize the app
 function init() {
-    console.log('Initializing static application');
+    console.log('Initializing enhanced static application');
     
     // Update authentication UI
     updateAuthUI();

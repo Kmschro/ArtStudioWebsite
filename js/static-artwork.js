@@ -14,30 +14,15 @@ function formatDate(dateString) {
     return date.toLocaleDateString(undefined, options);
 }
 
-// Get artwork by ID from static data
-function getArtworkById(id) {
-    // First try to get from localStorage (if coming from home page)
-    const storedArtwork = localStorage.getItem('selectedArtwork');
-    if (storedArtwork) {
-        const artwork = JSON.parse(storedArtwork);
-        if (artwork.id.toString() === id.toString()) {
-            return artwork;
-        }
-    }
-    
-    // Otherwise, find in static data
-    return ARTWORKS.find(artwork => artwork.id.toString() === id.toString());
-}
-
 // Display artwork details
 function displayArtworkDetails(artwork) {
     console.log('Displaying artwork details:', artwork);
     
-    // Fix image path for GitHub Pages
+    // Use the image URL directly - it can be a path or a data URL
     let imageUrl = artwork.imageUrl;
     
-    // If we're running on GitHub Pages, make sure the image paths are correct
-    if (window.location.hostname.endsWith('github.io')) {
+    // Only fix path if it's a relative path, not a data URL
+    if (!imageUrl.startsWith('data:') && window.location.hostname.endsWith('github.io')) {
         // Convert relative paths to GitHub Pages format
         imageUrl = imageUrl.startsWith('/') ? 
             `${window.location.pathname}${imageUrl.substring(1)}` : 
@@ -153,7 +138,22 @@ function init() {
     }
     
     console.log('Looking for artwork with ID:', artworkId);
-    const artwork = getArtworkById(artworkId);
+    
+    // First try to get from localStorage (if coming from home page)
+    const storedArtwork = localStorage.getItem('selectedArtwork');
+    let artwork = null;
+    
+    if (storedArtwork) {
+        const parsed = JSON.parse(storedArtwork);
+        if (parsed.id.toString() === artworkId.toString()) {
+            artwork = parsed;
+        }
+    }
+    
+    // If not found in localStorage, get from all artworks
+    if (!artwork) {
+        artwork = getArtworkById(artworkId);
+    }
     
     if (artwork) {
         displayArtworkDetails(artwork);

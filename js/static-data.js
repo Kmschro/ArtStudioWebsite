@@ -1,5 +1,5 @@
 // Static artwork data for GitHub Pages version
-const ARTWORKS = [
+const INITIAL_ARTWORKS = [
     {
         id: 1,
         title: "Sunset Reflections",
@@ -82,3 +82,91 @@ const USERS = [
         password: "password123" // Note: In a real app, you'd never store passwords in plain text
     }
 ];
+
+// Setup local storage for user-added artworks
+function setupLocalArtworks() {
+    // Check if we already have user artworks in localStorage
+    if (!localStorage.getItem('userArtworks')) {
+        localStorage.setItem('userArtworks', JSON.stringify([]));
+    }
+}
+
+// Get all artworks (initial + user added)
+function getAllArtworks() {
+    // Initialize local storage if needed
+    setupLocalArtworks();
+    
+    // Get user-added artworks from localStorage
+    const userArtworks = JSON.parse(localStorage.getItem('userArtworks') || '[]');
+    
+    // Combine initial artworks with user-added ones
+    return [...INITIAL_ARTWORKS, ...userArtworks];
+}
+
+// Add new artwork to localStorage
+function addArtwork(artworkData) {
+    // Initialize local storage if needed
+    setupLocalArtworks();
+    
+    // Get existing user artworks
+    const userArtworks = JSON.parse(localStorage.getItem('userArtworks') || '[]');
+    
+    // Generate a new ID (max ID + 1)
+    const allArtworks = getAllArtworks();
+    const nextId = allArtworks.length > 0 
+        ? Math.max(...allArtworks.map(a => a.id)) + 1 
+        : 1;
+    
+    // Create new artwork object
+    const newArtwork = {
+        ...artworkData,
+        id: nextId,
+        createdAt: new Date().toISOString()
+    };
+    
+    // Add to user artworks
+    userArtworks.push(newArtwork);
+    
+    // Save back to localStorage
+    localStorage.setItem('userArtworks', JSON.stringify(userArtworks));
+    
+    return newArtwork;
+}
+
+// Get artwork by ID
+function getArtworkById(id) {
+    return getAllArtworks().find(artwork => artwork.id.toString() === id.toString());
+}
+
+// Delete artwork by ID (only works for user-added artworks)
+function deleteArtwork(id) {
+    // Get user-added artworks
+    const userArtworks = JSON.parse(localStorage.getItem('userArtworks') || '[]');
+    
+    // Check if this ID exists in user artworks
+    const index = userArtworks.findIndex(artwork => artwork.id.toString() === id.toString());
+    
+    if (index !== -1) {
+        // Remove from array
+        userArtworks.splice(index, 1);
+        
+        // Save back to localStorage
+        localStorage.setItem('userArtworks', JSON.stringify(userArtworks));
+        return true;
+    }
+    
+    return false;
+}
+
+// Get artworks for the current user
+function getCurrentUserArtworks() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return [];
+    
+    return getAllArtworks().filter(artwork => 
+        artwork.createdByUser.toString() === userId.toString()
+    );
+}
+
+// Make artworks available globally
+const ARTWORKS = getAllArtworks();

@@ -1,174 +1,237 @@
-/* Artwork Detail Page Styles */
-.artwork-container {
-    max-width: 1200px;
+/* Admin Styles */
+.admin-container {
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 3rem 2rem;
+    padding: 2rem 1.5rem;
 }
 
-.artwork-detail {
+.admin-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.admin-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.admin-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.admin-card {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.loading {
-    text-align: center;
-    padding: 3rem;
-    font-size: 1.2rem;
-    color: #666;
-}
-
-.artwork-header {
     padding: 2rem;
-    background-color: var(--primary-color);
-    color: white;
+    margin-bottom: 2rem;
 }
 
-.artwork-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: white;
+.admin-card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-size: 1.8rem;
 }
 
-.artwork-date {
-    font-size: 1rem;
-    opacity: 0.8;
+/* Login Form */
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.artwork-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-}
-
-.artwork-image-container {
-    text-align: center;
-}
-
-.artwork-image {
-    max-width: 100%;
-    max-height: 600px;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.artwork-info {
-    display: flex;
-    flex-direction: column;
+/* Upload Form */
+.upload-form {
+    display: grid;
     gap: 1.5rem;
 }
 
-.artwork-description {
-    font-size: 1.1rem;
-    line-height: 1.8;
+.image-preview {
+    margin-top: 1rem;
+    text-align: center;
 }
 
-.artwork-metadata {
-    background-color: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent-color);
-}
-
-.metadata-item {
-    margin-bottom: 1rem;
-}
-
-.metadata-item:last-child {
-    margin-bottom: 0;
-}
-
-.metadata-label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 0.3rem;
-    color: #555;
-}
-
-.metadata-value {
-    color: #333;
-}
-
-.back-to-gallery {
-    display: inline-block;
-    margin-top: 2rem;
-    font-weight: 600;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-}
-
-.nav-links a {
-    color: var(--primary-color);
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: var(--accent-color);
-}
-
-/* Responsive adjustments */
-@media (min-width: 768px) {
-    .artwork-content {
-        flex-direction: row;
-        align-items: flex-start;
-    }
-    
-    .artwork-image-container {
-        flex: 1;
-    }
-    
-    .artwork-info {
-        flex: 1;
-    }
-}
-
-@media (max-width: 767px) {
-    .artwork-header h1 {
-        font-size: 2rem;
-    }
-    
-    .artwork-container {
-        padding: 2rem 1rem;
-    }
-}
-
-/* Additional details section */
-.additional-details {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
-}
-
-.additional-details h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-/* Social sharing */
-.social-share {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1rem;
-}
-
-.share-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    background-color: #f5f5f5;
+.image-preview img {
+    max-width: 100%;
+    max-height: 300px;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    color: #555;
-    font-size: 0.9rem;
+    padding: 5px;
+}
+
+/* Artwork List */
+.my-artworks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.artwork-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.artwork-item {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.artwork-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.artwork-item-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.artwork-item-info {
+    padding: 1rem;
+}
+
+.artwork-item-title {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.artwork-item-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+
+.artwork-item-link {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.share-button:hover {
-    background-color: #e5e5e5;
+.delete-btn:hover {
+    background-color: #bd2130;
+}
+
+/* Alert Messages */
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Loading & Error States */
+.loading, .no-artworks {
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+}
+
+.no-artworks {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* View Site Button */
+.view-site-btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-right: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.view-site-btn:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Demo Credentials Box */
+.demo-credentials {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.demo-credentials p {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.demo-credentials ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.demo-credentials li {
+    margin-bottom: 0.25rem;
+}
+
+/* User greeting */
+.user-greeting {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .artwork-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-card {
+        padding: 1.5rem;
+    }
+
+    .artwork-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Added CSS for file input styling */
+input[type="file"] {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    background-color: #f8f9fa;
 }
