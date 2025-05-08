@@ -327,15 +327,15 @@ function setupFormSubmission() {
             uploadForm.reset();
             imagePreview.style.display = 'none';
             
+            // Clear any existing code display
+            if (codeDisplayArea) {
+                codeDisplayArea.innerHTML = '';
+            }
+            
             // Refresh the artworks list
             displayAdminArtworks();
             
-            // Automatically generate code for this artwork
-            if (newArtwork) {
-                setTimeout(() => {
-                    generateCodeForArtwork(newArtwork);
-                }, 500);
-            }
+            // REMOVED automatic code generation that was here
             
         } catch (error) {
             console.error('Error adding artwork:', error);
