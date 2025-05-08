@@ -1,4 +1,4 @@
-        /* Admin Styles */
+/* Admin Styles */
 .admin-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -108,30 +108,13 @@
 
 .artwork-item-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 0.5rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
 }
 
 .artwork-item-link {
     color: var(--accent-color);
     font-weight: 600;
-}
-
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.delete-btn:hover {
-    background-color: #bd2130;
 }
 
 /* Code Export Styles */
@@ -194,21 +177,6 @@
     height: auto;
 }
 
-.export-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.export-btn:hover {
-    background-color: #0056b3;
-}
-
 /* Alert Messages */
 .alert {
     padding: 1rem;
@@ -255,29 +223,6 @@
 .view-site-btn:hover {
     background-color: #0056b3;
     color: white;
-}
-
-/* Demo Credentials Box */
-.demo-credentials {
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.demo-credentials p {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.demo-credentials ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.demo-credentials li {
-    margin-bottom: 0.25rem;
 }
 
 /* User greeting */

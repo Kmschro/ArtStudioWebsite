@@ -78,49 +78,16 @@ function displayAdminArtworks() {
                 <h3 class="artwork-item-title">${artwork.title}</h3>
                 <div class="artwork-item-actions">
                     <a href="artwork.html?id=${artwork.id}" class="artwork-item-link" target="_blank">View</a>
-                    <button class="delete-btn" data-id="${artwork.id}">Delete</button>
-                    <button class="export-btn" data-id="${artwork.id}">Export Code</button>
                 </div>
             </div>
         `;
         
         artworksList.appendChild(item);
     });
-    
-    // Add event listeners to buttons
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const artworkId = this.getAttribute('data-id');
-            deleteArtworkHandler(artworkId);
-        });
-    });
-    
-    document.querySelectorAll('.export-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const artworkId = this.getAttribute('data-id');
-            generateCodeForArtwork(artworkId);
-        });
-    });
-}
-
-// Delete artwork handler
-function deleteArtworkHandler(id) {
-    if (confirm('Are you sure you want to delete this artwork?')) {
-        const success = deleteArtwork(id);
-        
-        if (success) {
-            showAlert('Artwork deleted successfully!', false);
-            displayAdminArtworks(); // Refresh the list
-        } else {
-            showAlert('Could not delete artwork. It may be part of the initial collection.');
-        }
-    }
 }
 
 // Generate code for adding to static-data.js
-function generateCodeForArtwork(id) {
-    const artwork = getArtworkById(id);
-    
+function generateCodeForArtwork(artwork) {
     if (!artwork) {
         showAlert('Artwork not found');
         return;
@@ -354,7 +321,7 @@ function setupFormSubmission() {
             const newArtwork = addArtwork(artworkData);
             
             // Show success message
-            showAlert(`Artwork "${title}" has been added successfully! Click "Export Code" to get code for permanent addition.`, false);
+            showAlert(`Artwork "${title}" has been added successfully!`, false);
             
             // Reset form
             uploadForm.reset();
@@ -366,7 +333,7 @@ function setupFormSubmission() {
             // Automatically generate code for this artwork
             if (newArtwork) {
                 setTimeout(() => {
-                    generateCodeForArtwork(newArtwork.id);
+                    generateCodeForArtwork(newArtwork);
                 }, 500);
             }
             
