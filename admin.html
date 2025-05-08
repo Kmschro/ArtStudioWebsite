@@ -37,8 +37,8 @@
                 <div class="admin-card">
                     <div id="user-info">
                         <div class="user-greeting">Hello, Administrator</div>
-                        <p>This is a static demo of the admin panel for GitHub Pages.</p>
-                        <p>Note: Since GitHub Pages only hosts static content, form submissions and dynamic content won't actually work.</p>
+                        <p>This is a static version of the admin panel for GitHub Pages.</p>
+                        <p><strong>Note:</strong> Since GitHub Pages only serves static content, you'll need to manually add new artworks to your repository. When you upload a new artwork, use the "Export Code" button to get code that you can add to your static-data.js file.</p>
                     </div>
                 </div>
                 
@@ -85,6 +85,11 @@
                         <button type="submit" class="btn">Upload Artwork</button>
                     </form>
                 </div>
+                
+                <!-- Code Export Area -->
+                <div id="code-display">
+                    <!-- Code will be displayed here after upload -->
+                </div>
 
                 <!-- My Artworks -->
                 <div class="admin-card">
@@ -93,7 +98,7 @@
                         <button id="refresh-btn" class="btn">Refresh</button>
                     </div>
                     <div id="artworks-list" class="artwork-list">
-                        <!-- Static artwork display for GitHub Pages -->
+                        <!-- Artwork items will be dynamically added here -->
                     </div>
                 </div>
             </div>
@@ -114,6 +119,7 @@
         </div>
     </footer>
 
+    <!-- Load scripts in the correct order -->
     <script src="./js/static-data.js"></script>
     <script src="./js/static-admin.js"></script>
 </body>

@@ -1,5 +1,5 @@
 // Enhanced admin page for GitHub Pages
-// This version actually saves artworks to localStorage
+// This version allows admins to export code to update static-data.js
 
 // DOM Elements
 const artworksList = document.getElementById('artworks-list');
@@ -10,6 +10,18 @@ const imagePreview = document.getElementById('image-preview');
 const previewImg = document.getElementById('preview-img');
 const logoutBtn = document.getElementById('logout-btn');
 const refreshBtn = document.getElementById('refresh-btn');
+const codeDisplayArea = document.getElementById('code-display');
+const imageLinkArea = document.getElementById('image-link');
+
+// Simple placeholder function if not defined elsewhere
+function createBasicPlaceholder(text) {
+    return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="100" viewBox="0 0 150 100">
+            <rect fill="#f2f2f2" width="150" height="100"/>
+            <text fill="#888888" font-family="Arial,sans-serif" font-size="12" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">${text || 'Artwork'}</text>
+        </svg>`
+    );
+}
 
 // Check if user is logged in as admin, redirect if not
 function checkAdminAccess() {
@@ -42,16 +54,32 @@ function displayAdminArtworks() {
     
     // Create and append artwork items
     userArtworks.forEach(artwork => {
+        // Use the image URL directly - it can be a path or a data URL
+        let artworkImageUrl = artwork.imageUrl;
+        
+        // Only fix path if it's a relative path, not a data URL
+        if (artworkImageUrl && !artworkImageUrl.startsWith('data:') && window.location.hostname.endsWith('github.io')) {
+            // Convert relative paths to GitHub Pages format
+            artworkImageUrl = artworkImageUrl.startsWith('/') ? 
+                `${window.location.pathname}${artworkImageUrl.substring(1)}` : 
+                artworkImageUrl;
+        }
+        
         const item = document.createElement('div');
         item.className = 'artwork-item';
         
+        const placeholderSrc = typeof createTitledPlaceholder === 'function' ? 
+            createTitledPlaceholder(150, 100, artwork.title) : 
+            createBasicPlaceholder(artwork.title);
+        
         item.innerHTML = `
-            <img src="${artwork.imageUrl}" alt="${artwork.title}" class="artwork-item-image" onerror="this.src='https://via.placeholder.com/150x100?text=Artwork'">
+            <img src="${artworkImageUrl}" alt="${artwork.title}" class="artwork-item-image" onerror="this.src='${placeholderSrc}'">
             <div class="artwork-item-info">
                 <h3 class="artwork-item-title">${artwork.title}</h3>
                 <div class="artwork-item-actions">
                     <a href="artwork.html?id=${artwork.id}" class="artwork-item-link" target="_blank">View</a>
                     <button class="delete-btn" data-id="${artwork.id}">Delete</button>
+                    <button class="export-btn" data-id="${artwork.id}">Export Code</button>
                 </div>
             </div>
         `;
@@ -59,11 +87,18 @@ function displayAdminArtworks() {
         artworksList.appendChild(item);
     });
     
-    // Add event listeners to delete buttons
+    // Add event listeners to buttons
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const artworkId = this.getAttribute('data-id');
             deleteArtworkHandler(artworkId);
+        });
+    });
+    
+    document.querySelectorAll('.export-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const artworkId = this.getAttribute('data-id');
+            generateCodeForArtwork(artworkId);
         });
     });
 }
@@ -80,6 +115,135 @@ function deleteArtworkHandler(id) {
             showAlert('Could not delete artwork. It may be part of the initial collection.');
         }
     }
+}
+
+// Generate code for adding to static-data.js
+function generateCodeForArtwork(id) {
+    const artwork = getArtworkById(id);
+    
+    if (!artwork) {
+        showAlert('Artwork not found');
+        return;
+    }
+    
+    // Clear previous code
+    if (codeDisplayArea) {
+        codeDisplayArea.innerHTML = '';
+    }
+    
+    // Generate a filename for the image
+    const sanitizedTitle = artwork.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+    
+    const filename = `${sanitizedTitle}.jpg`;
+    const imagePath = `./uploads/${filename}`;
+    
+    // Create a card to display the code
+    const codeCard = document.createElement('div');
+    codeCard.className = 'admin-card code-export-card';
+    
+    // Create code snippet for static-data.js
+    const codeSnippet = `
+// Add this to your INITIAL_ARTWORKS array in static-data.js
+{
+    id: ${getNextArtworkId()},
+    title: "${escapeJsString(artwork.title)}",
+    description: "${escapeJsString(artwork.description)}",
+    imageUrl: "${imagePath}",
+    createdByUser: ${artwork.createdByUser},
+    createdAt: "${new Date().toISOString()}",
+    medium: "${escapeJsString(artwork.medium || '')}",
+    dimensions: "${escapeJsString(artwork.dimensions || '')}",
+    yearCreated: "${escapeJsString(artwork.yearCreated || '')}",
+    artistName: "${escapeJsString(artwork.artistName || '')}",
+    artistBio: "${escapeJsString(artwork.artistBio || '')}"
+}
+`;
+    
+    codeCard.innerHTML = `
+        <h2>Generated Code</h2>
+        <p>Follow these steps to add this artwork permanently:</p>
+        <ol>
+            <li>Download the image using the button below</li>
+            <li>Save the image to your project's "uploads" folder as "${filename}"</li>
+            <li>Copy the code below and add it to your static-data.js file</li>
+            <li>Update your repository on GitHub</li>
+        </ol>
+        <div class="code-section">
+            <pre><code>${escapeHtml(codeSnippet)}</code></pre>
+            <button class="btn copy-btn">Copy Code</button>
+        </div>
+        <div class="image-download-section">
+            <h3>Download Image</h3>
+            <div id="image-preview-export">
+                <img src="${artwork.imageUrl}" alt="${artwork.title}" style="max-width:300px; max-height:200px;">
+            </div>
+            <a id="download-link" class="btn download-btn" download="${filename}">Download Image</a>
+        </div>
+    `;
+    
+    // Add the code card to the display area
+    if (codeDisplayArea) {
+        codeDisplayArea.appendChild(codeCard);
+        
+        // Set up download link
+        if (artwork.imageUrl.startsWith('data:')) {
+            const downloadLink = codeCard.querySelector('#download-link');
+            if (downloadLink) {
+                downloadLink.href = artwork.imageUrl;
+            }
+        }
+        
+        // Set up copy button
+        const copyBtn = codeCard.querySelector('.copy-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeSnippet)
+                    .then(() => {
+                        showAlert('Code copied to clipboard!', false);
+                    })
+                    .catch(err => {
+                        console.error('Error copying code:', err);
+                        showAlert('Failed to copy code. Please select and copy manually.');
+                    });
+            });
+        }
+    }
+    
+    // Scroll to the code
+    if (codeDisplayArea) {
+        codeDisplayArea.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Get next ID for a new artwork
+function getNextArtworkId() {
+    const allArtworks = getAllArtworks();
+    return allArtworks.length > 0 ? Math.max(...allArtworks.map(a => a.id)) + 1 : 1;
+}
+
+// Escape HTML entities
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// Escape strings for JavaScript
+function escapeJsString(str) {
+    if (!str) return '';
+    return str
+        .replace(/\\/g, '\\\\')
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r')
+        .replace(/\t/g, '\\t');
 }
 
 // Show alert message
@@ -190,7 +354,7 @@ function setupFormSubmission() {
             const newArtwork = addArtwork(artworkData);
             
             // Show success message
-            showAlert(`Artwork "${title}" has been added successfully!`, false);
+            showAlert(`Artwork "${title}" has been added successfully! Click "Export Code" to get code for permanent addition.`, false);
             
             // Reset form
             uploadForm.reset();
@@ -198,6 +362,13 @@ function setupFormSubmission() {
             
             // Refresh the artworks list
             displayAdminArtworks();
+            
+            // Automatically generate code for this artwork
+            if (newArtwork) {
+                setTimeout(() => {
+                    generateCodeForArtwork(newArtwork.id);
+                }, 500);
+            }
             
         } catch (error) {
             console.error('Error adding artwork:', error);

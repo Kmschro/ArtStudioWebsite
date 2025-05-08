@@ -1,4 +1,4 @@
-/* Admin Styles */
+        /* Admin Styles */
 .admin-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -110,6 +110,8 @@
     display: flex;
     justify-content: space-between;
     margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .artwork-item-link {
@@ -130,6 +132,81 @@
 
 .delete-btn:hover {
     background-color: #bd2130;
+}
+
+/* Code Export Styles */
+.code-export-card {
+    margin-top: 2rem;
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
+}
+
+.code-section {
+    background-color: #f1f1f1;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.code-section pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    background-color: #007bff;
+}
+
+.image-download-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.download-btn {
+    margin-top: 1rem;
+    background-color: #28a745;
+}
+
+.download-btn:hover {
+    background-color: #218838;
+}
+
+#image-preview-export {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    display: inline-block;
+}
+
+#image-preview-export img {
+    max-width: 100%;
+    height: auto;
+}
+
+.export-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.export-btn:hover {
+    background-color: #0056b3;
 }
 
 /* Alert Messages */

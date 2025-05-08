@@ -31,14 +31,14 @@ function displayArtworkDetails(artwork) {
     
     // Create artwork detail HTML
     const html = `
-        <div class="artwork-header">
-            <h1>${artwork.title}</h1>
-            <div class="artwork-date">Added on ${formatDate(artwork.createdAt)}</div>
+    <div class="artwork-header">
+        <h1>${artwork.title}</h1>
+        <div class="artwork-date">Added on ${formatDate(artwork.createdAt)}</div>
+    </div>
+    <div class="artwork-content">
+        <div class="artwork-image-container">
+            <img src="${imageUrl}" alt="${artwork.title}" class="artwork-image" onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'800\\' height=\\'600\\' viewBox=\\'0 0 800 600\\'><rect fill=\\'%23cccccc\\' width=\\'800\\' height=\\'600\\'/><text fill=\\'%23333333\\' font-family=\\'Arial,sans-serif\\' font-size=\\'24\\' x=\\'50%\\' y=\\'50%\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>${artwork.title}</text></svg>'">
         </div>
-        <div class="artwork-content">
-            <div class="artwork-image-container">
-                <img src="${imageUrl}" alt="${artwork.title}" class="artwork-image" onerror="this.src='https://via.placeholder.com/800x600?text=Artwork+Image'">
-            </div>
             <div class="artwork-info">
                 <div class="artwork-description">
                     ${artwork.description}

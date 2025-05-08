@@ -22,12 +22,12 @@ function createArtworkCard(artwork) {
     }
     
     card.innerHTML = `
-        <img src="${imageUrl}" alt="${artwork.title}" class="artwork-image" onerror="this.src='https://via.placeholder.com/300x200?text=Artwork+Image'">
-        <div class="artwork-info">
-            <h3>${artwork.title}</h3>
-            <button class="btn artwork-view-btn">View Details</button>
-        </div>
-    `;
+          <img src="${imageUrl}" alt="${artwork.title}" class="artwork-image" onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'200\\' viewBox=\\'0 0 300 200\\'><rect fill=\\'%23cccccc\\' width=\\'300\\' height=\\'200\\'/><text fill=\\'%23333333\\' font-family=\\'Arial,sans-serif\\' font-size=\\'14\\' x=\\'50%\\' y=\\'50%\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>${artwork.title}</text></svg>'">
+    <div class="artwork-info">
+        <h3>${artwork.title}</h3>
+        <button class="btn artwork-view-btn">View Details</button>
+    </div>
+`;
     
     // Add event listener to view button
     card.querySelector('.artwork-view-btn').addEventListener('click', (e) => {

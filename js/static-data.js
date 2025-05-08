@@ -4,7 +4,7 @@ const INITIAL_ARTWORKS = [
         id: 1,
         title: "Sunset Reflections",
         description: "A vibrant impressionist landscape capturing the warm glow of a summer sunset over a tranquil lake. The interplay of light and water creates a symphony of colors, from deep purples to fiery oranges and soft pinks.",
-        imageUrl: "/uploads/Hillside.jpg",
+        imageUrl: "./uploads/Hillside.jpg", // Changed to relative path
         createdByUser: 1,
         createdAt: "2024-01-15T14:22:56.789Z",
         medium: "Oil on canvas",
@@ -17,7 +17,7 @@ const INITIAL_ARTWORKS = [
         id: 2,
         title: "Urban Fragments",
         description: "This mixed media piece explores the layered experience of city life through a collage of architectural elements, text, and abstract forms. The fragmented composition reflects the chaotic yet structured nature of urban environments.",
-        imageUrl: "/uploads/weirdPainting.jpg",
+        imageUrl: "./uploads/weirdPainting.jpg", // Changed to relative path
         createdByUser: 1,
         createdAt: "2024-02-10T09:15:30.123Z",
         medium: "Mixed media on wood panel",
@@ -30,7 +30,7 @@ const INITIAL_ARTWORKS = [
         id: 3,
         title: "Whispers of Memory",
         description: "This abstract expressionist painting explores themes of memory and emotion through gestural brushstrokes and a muted color palette. Layers of paint are built up and scraped away to reveal glimpses of previous marks, mirroring how memories are both preserved and altered over time.",
-        imageUrl: "/uploads/flowers.jpg",
+        imageUrl: "./uploads/flowers.jpg", // Changed to relative path
         createdByUser: 1,
         createdAt: "2024-03-05T16:40:22.456Z",
         medium: "Acrylic and oil pastel on canvas",
@@ -43,7 +43,7 @@ const INITIAL_ARTWORKS = [
         id: 4,
         title: "Botanical Studies: Spring Collection",
         description: "A series of detailed watercolor studies of spring flora from the artist's garden. Each specimen is rendered with botanical accuracy while maintaining a loose, expressive quality in the brushwork. The collection celebrates the delicate beauty and ephemeral nature of spring blossoms.",
-        imageUrl: "/uploads/colorfulOwlPainting.jpg",
+        imageUrl: "./uploads/colorfulOwlPainting.jpg", // Changed to relative path
         createdByUser: 1,
         createdAt: "2024-04-12T11:30:45.789Z",
         medium: "Watercolor on cotton paper",
@@ -56,7 +56,7 @@ const INITIAL_ARTWORKS = [
         id: 5,
         title: "Contemplation in Blue",
         description: "This figurative painting depicts a solitary figure in a moment of quiet introspection. Rendered primarily in shades of blue and complementary amber tones, the composition uses negative space and simplified forms to create a sense of emotional resonance and psychological depth.",
-        imageUrl: "/uploads/oilFlowers.png",
+        imageUrl: "./uploads/oilFlowers.png", // Changed to relative path
         createdByUser: 1,
         createdAt: "2024-04-25T14:20:10.123Z",
         medium: "Oil on linen",
